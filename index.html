@@ -17,22 +17,97 @@
 
     /* ---- HEADER ---- */
     header {
-      background: var(--azul); color: white;
-      padding: 28px 36px; margin-bottom: 0;
-      display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+      background: linear-gradient(135deg, #002558 0%, var(--azul) 60%, #005299 100%);
+      color: white;
+      padding: 0;
+      margin-bottom: 0;
+      position: relative;
+      overflow: hidden;
     }
-    .logo-circle {
-      width: 60px; height: 60px; border-radius: 50%;
-      background: var(--oro); display: flex; align-items: center;
-      justify-content: center; font-size: 1.8em; flex-shrink: 0;
+    header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        -45deg,
+        transparent, transparent 40px,
+        rgba(255,255,255,.03) 40px, rgba(255,255,255,.03) 80px
+      );
+      pointer-events: none;
     }
-    header h1 { margin: 0; font-size: 1.5em; }
-    header p  { margin: 5px 0 0; font-size: 0.9em; opacity: .75; }
+    .header-inner {
+      position: relative; z-index: 1;
+      display: flex; align-items: center; gap: 28px;
+      flex-wrap: wrap; padding: 28px 40px;
+    }
+    .escudo-wrap {
+      flex-shrink: 0;
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      box-shadow:
+        0 0 0 3px var(--oro),
+        0 0 0 7px rgba(200,155,40,.25),
+        0 6px 24px rgba(0,0,0,.5);
+      overflow: hidden;
+      transition: transform .35s, box-shadow .35s;
+    }
+    .escudo-wrap:hover {
+      transform: scale(1.08);
+      box-shadow:
+        0 0 0 3px var(--oro),
+        0 0 0 9px rgba(200,155,40,.35),
+        0 10px 32px rgba(0,0,0,.55);
+    }
+    .escudo-ucr {
+      width: 100%; height: 100%; object-fit: cover;
+      display: block;
+    }
+    .header-text { flex: 1; min-width: 200px; }
+    .header-text .pre-title {
+      font-size: 0.72em; font-weight: 600; letter-spacing: .12em;
+      text-transform: uppercase; opacity: .65; margin-bottom: 4px;
+    }
+    .header-text h1 {
+      margin: 0; font-size: 1.65em; font-weight: 700; line-height: 1.2;
+      text-shadow: 0 2px 8px rgba(0,0,0,.25);
+    }
+    .header-text .sub {
+      margin: 6px 0 0; font-size: 0.88em; opacity: .75;
+    }
+    .header-badge-group {
+      display: flex; flex-direction: column; gap: 8px; align-items: flex-end;
+    }
+    .header-badge {
+      background: var(--oro); color: white;
+      padding: 5px 16px; border-radius: 20px;
+      font-size: 0.78em; font-weight: 700; letter-spacing: .04em;
+      box-shadow: 0 2px 8px rgba(0,0,0,.2);
+      white-space: nowrap;
+    }
+    .header-badge.outline {
+      background: transparent; border: 1.5px solid rgba(255,255,255,.4);
+      color: rgba(255,255,255,.85);
+    }
+
+    /* ---- HERO STRIP ---- */
+    .hero-strip {
+      background: var(--oro);
+      padding: 10px 40px;
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.82em; color: white; font-weight: 600;
+    }
+    .hero-strip .dot { width: 6px; height: 6px; border-radius: 50%; background: white; opacity: .6; }
 
     /* ---- SUBTÍTULO SECCIÓN ---- */
-    .section-title { text-align: center; padding: 36px 20px 10px; }
-    .section-title h2 { color: var(--azul); margin: 0 0 6px; font-size: 1.4em; }
-    .section-title p  { color: #555; margin: 0; font-size: 0.95em; }
+    .section-title { text-align: center; padding: 40px 20px 8px; }
+    .section-title h2 {
+      color: var(--azul); margin: 0 0 8px; font-size: 1.5em;
+      position: relative; display: inline-block;
+    }
+    .section-title h2::after {
+      content: ''; display: block; margin: 8px auto 0;
+      width: 48px; height: 3px; border-radius: 2px; background: var(--oro);
+    }
+    .section-title p  { color: #666; margin: 12px 0 0; font-size: 0.95em; }
 
     /* ---- GRID DE SEMANAS ---- */
     .weeks-grid {
@@ -46,44 +121,58 @@
 
     /* ---- TARJETA DE SEMANA ---- */
     .week-card {
-      background: white; border-radius: 14px;
-      box-shadow: 0 3px 12px rgba(0,0,0,.09);
+      background: white; border-radius: 16px;
+      box-shadow: 0 3px 14px rgba(0,0,0,.09);
       overflow: hidden; display: flex; flex-direction: column;
-      transition: transform .2s, box-shadow .2s;
+      transition: transform .25s, box-shadow .25s;
+      border-bottom: 4px solid transparent;
     }
-    .week-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.13); }
+    .week-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 28px rgba(0,0,0,.14);
+      border-bottom-color: var(--oro);
+    }
 
     .week-card .card-top {
       background: var(--azul); color: white;
-      padding: 18px 20px 14px;
+      padding: 20px 22px 16px;
       display: flex; justify-content: space-between; align-items: flex-start;
+      position: relative; overflow: hidden;
+    }
+    .week-card .card-top::after {
+      content: attr(data-num);
+      position: absolute; right: -8px; bottom: -14px;
+      font-size: 5.5em; font-weight: 900; opacity: .08; line-height: 1;
+      pointer-events: none; font-family: 'Segoe UI', sans-serif;
     }
     .week-card .card-top .week-num {
-      font-size: 0.78em; font-weight: 600;
-      text-transform: uppercase; letter-spacing: .06em; opacity: .75;
+      font-size: 0.72em; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .1em; opacity: .65;
+      margin-bottom: 4px;
     }
-    .week-card .card-top h3 { margin: 6px 0 0; font-size: 1.05em; line-height: 1.35; }
+    .week-card .card-top h3 { margin: 0; font-size: 1em; line-height: 1.4; font-weight: 600; }
     .week-card .card-top .status-badge {
-      flex-shrink: 0; padding: 3px 10px; border-radius: 20px;
-      font-size: 0.75em; font-weight: 700; margin-left: 10px; margin-top: 2px;
+      flex-shrink: 0; padding: 4px 11px; border-radius: 20px;
+      font-size: 0.72em; font-weight: 700; margin-left: 12px;
+      white-space: nowrap;
     }
     .badge-ok   { background: #27ae60; color: white; }
-    .badge-soon { background: rgba(255,255,255,.2); color: white; }
+    .badge-soon { background: rgba(255,255,255,.18); color: rgba(255,255,255,.9); }
 
     .week-card .card-body {
-      padding: 16px 20px; flex: 1;
-      display: flex; flex-direction: column; gap: 8px;
+      padding: 18px 22px; flex: 1;
+      display: flex; flex-direction: column; gap: 10px;
     }
     .week-card .card-body .topic-tag {
       display: inline-block; background: #eef2fa; color: var(--azul);
-      font-size: 0.78em; font-weight: 600; padding: 3px 10px;
-      border-radius: 20px; align-self: flex-start;
+      font-size: 0.76em; font-weight: 700; padding: 4px 12px;
+      border-radius: 20px; align-self: flex-start; letter-spacing: .02em;
     }
     .week-card .card-body p {
-      margin: 0; font-size: 0.88em; color: #555; line-height: 1.5;
+      margin: 0; font-size: 0.87em; color: #555; line-height: 1.6;
     }
 
-    .week-card .card-footer { padding: 14px 20px; border-top: 1px solid #eee; }
+    .week-card .card-footer { padding: 14px 22px; border-top: 1px solid #eef0f4; }
     .btn-activity {
       display: block; text-align: center; text-decoration: none;
       padding: 10px 0; border-radius: 8px; font-size: 0.9em;
@@ -95,23 +184,142 @@
       background: #e8ecf0; color: #aaa; cursor: not-allowed; pointer-events: none;
     }
 
+    /* ---- DIVISOR ---- */
+    .section-divider {
+      max-width: 1100px; margin: 0 auto;
+      padding: 0 36px;
+      border: none; border-top: 2px dashed #d8e2ef;
+    }
+
+    /* ---- MATERIALES PDF — ACORDEÓN ---- */
+    .acordeon-wrap {
+      max-width: 860px;
+      margin: 20px auto 48px;
+      padding: 0 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .acord-item {
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 2px 10px rgba(0,0,0,.08);
+      overflow: hidden;
+      border: 2px solid transparent;
+      transition: border-color .25s;
+    }
+    .acord-item.open { border-color: var(--oro); }
+    .acord-header {
+      display: flex; align-items: center; gap: 14px;
+      padding: 16px 20px;
+      cursor: pointer;
+      user-select: none;
+      background: white;
+      transition: background .2s;
+    }
+    .acord-header:hover { background: #f5f8ff; }
+    .acord-item.disabled .acord-header { cursor: default; opacity: .55; }
+    .acord-item.disabled .acord-header:hover { background: white; }
+    .acord-num {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--azul); color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 1em; flex-shrink: 0;
+    }
+    .acord-item.disabled .acord-num { background: #c8d0dc; }
+    .acord-title { flex: 1; }
+    .acord-title strong { display: block; font-size: .95em; color: var(--azul); }
+    .acord-item.disabled .acord-title strong { color: #aaa; }
+    .acord-title span { font-size: .78em; color: #888; }
+    .acord-badge {
+      font-size: .72em; font-weight: 700; padding: 3px 10px;
+      border-radius: 20px; white-space: nowrap;
+    }
+    .acord-badge.ok   { background: #e6f7ed; color: #1a7a3c; }
+    .acord-badge.soon { background: #f0f2f5; color: #aaa; }
+    .acord-chevron {
+      font-size: 1em; color: #aaa; transition: transform .3s;
+      flex-shrink: 0; margin-left: 6px;
+    }
+    .acord-item.open .acord-chevron { transform: rotate(180deg); color: var(--oro); }
+    .acord-body {
+      max-height: 0; overflow: hidden;
+      transition: max-height .35s ease, padding .3s;
+      padding: 0 20px;
+      border-top: 0px solid #eee;
+    }
+    .acord-item.open .acord-body {
+      max-height: 600px;
+      padding: 0 20px 16px;
+      border-top: 1px solid #eef0f4;
+    }
+    .pdf-list { display: flex; flex-direction: column; gap: 8px; padding-top: 14px; }
+    .pdf-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 11px 14px; border-radius: 10px;
+      text-decoration: none; color: inherit;
+      background: #f6f8fb;
+      border-left: 4px solid var(--azul);
+      transition: background .2s, border-color .2s, transform .2s;
+    }
+    .pdf-row:hover {
+      background: #eef2fa;
+      border-left-color: var(--oro);
+      transform: translateX(3px);
+    }
+    .pdf-row-icon {
+      font-size: 1.4em; flex-shrink: 0;
+    }
+    .pdf-row-info { flex: 1; min-width: 0; }
+    .pdf-row-info .rtitle {
+      font-size: .88em; font-weight: 700; color: var(--azul);
+    }
+    .pdf-row-info .rmeta {
+      font-size: .74em; color: #888; margin-top: 2px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .pdf-row-dl {
+      font-size: .8em; font-weight: 700; color: var(--azul);
+      background: #dce6f7; padding: 5px 12px; border-radius: 20px;
+      white-space: nowrap; flex-shrink: 0; transition: background .2s;
+    }
+    .pdf-row:hover .pdf-row-dl { background: var(--azul); color: white; }
+
     /* ---- FOOTER ---- */
     footer {
-      text-align: center; padding: 20px;
-      color: #999; font-size: 0.82em;
-      border-top: 1px solid #dde;
+      background: var(--azul); color: rgba(255,255,255,.55);
+      text-align: center; padding: 22px 20px;
+      font-size: 0.82em; margin-top: 10px;
+      display: flex; flex-wrap: wrap; align-items: center;
+      justify-content: center; gap: 10px;
     }
+    footer img { width: 28px; opacity: .7; filter: brightness(0) invert(1); }
   </style>
 </head>
 <body>
 
 <header>
-  <div class="logo-circle">📐</div>
-  <div>
-    <h1>MA-0125 Matemática Elemental</h1>
-    <p>Portal de Actividades Interactivas por Semana</p>
+  <div class="header-inner">
+    <div class="escudo-wrap">
+      <img src="escudo_p.jpg" alt="Escudo UCR" class="escudo-ucr">
+    </div>
+    <div class="header-text">
+      <div class="pre-title">Universidad de Costa Rica</div>
+      <h1>MA-0125 Matemática Elemental</h1>
+        <p class="sub">Portal de Actividades Interactivas &mdash; Curso regular</p>
+      <p class="sub" style="margin-top:4px; opacity:.6; font-size:.8em;">✏️ Prof. Francisco Campos Sandí</p>
+    </div>
+    <div class="header-badge-group">
+      <span class="header-badge">2026</span>
+      <span class="header-badge outline">Sede Golfito</span>
+    </div>
   </div>
 </header>
+<div class="hero-strip">
+  <span class="dot"></span>
+  <span>Escuela de Matemática &nbsp;·&nbsp; Actividades de práctica por semana</span>
+  <span class="dot"></span>
+</div>
 
 <div class="section-title">
   <h2>Actividades del curso</h2>
@@ -122,7 +330,7 @@
 
   <!-- ===== SEMANA 1 ===== -->
   <div class="week-card">
-    <div class="card-top">
+    <div class="card-top" data-num="1">
       <div>
         <div class="week-num">Semana 1</div>
         <h3>Clasificación y Operaciones con Polinomios</h3>
@@ -140,7 +348,7 @@
 
   <!-- ===== SEMANA 2 ===== -->
   <div class="week-card">
-    <div class="card-top" style="background:#4a6a94;">
+    <div class="card-top" data-num="2" style="background:#4a6a94;">
       <div>
         <div class="week-num">Semana 2</div>
         <h3>Factorización de expresiones algebraicas</h3>
@@ -158,7 +366,7 @@
 
   <!-- ===== SEMANA 3 ===== -->
   <div class="week-card">
-    <div class="card-top" style="background:#4a6a94;">
+    <div class="card-top" data-num="3" style="background:#4a6a94;">
       <div>
         <div class="week-num">Semana 3</div>
         <h3>Fracciones algebraicas</h3>
@@ -176,7 +384,7 @@
 
   <!-- ===== SEMANA 4 ===== -->
   <div class="week-card">
-    <div class="card-top" style="background:#4a6a94;">
+    <div class="card-top" data-num="4" style="background:#4a6a94;">
       <div>
         <div class="week-num">Semana 4</div>
         <h3>Ecuaciones lineales y cuadráticas</h3>
@@ -194,8 +402,108 @@
 
 </div>
 
+<!-- ============================
+     SECCIÓN MATERIALES PDF
+     ============================ -->
+<hr class="section-divider">
+
+<div class="section-title">
+  <h2>📄 Material de estudio por semana</h2>
+  <p>Descarga los apuntes y guías en PDF para repasar el contenido de cada semana.</p>
+</div>
+
+<div class="acordeon-wrap">
+
+  <!-- SEMANA 1 — disponible -->
+  <div class="acord-item" id="acord-1">
+    <div class="acord-header" onclick="toggleAcord('acord-1')">
+      <div class="acord-num">1</div>
+      <div class="acord-title">
+        <strong>Semana 1 — Polinomios</strong>
+        <span>3 archivos disponibles</span>
+      </div>
+      <span class="acord-badge ok">✔ Disponible</span>
+      <span class="acord-chevron">▼</span>
+    </div>
+    <div class="acord-body">
+      <div class="pdf-list">
+        <a href="SEMANA%201/PRESEBTACION.pdf" class="pdf-row" target="_blank">
+          <span class="pdf-row-icon">📊</span>
+          <div class="pdf-row-info">
+            <div class="rtitle">Presentación</div>
+            <div class="rmeta">PRESEBTACION.pdf</div>
+          </div>
+          <span class="pdf-row-dl">↓ Abrir</span>
+        </a>
+        <a href="SEMANA%201/MATERIALES.pdf" class="pdf-row" target="_blank">
+          <span class="pdf-row-icon">📕</span>
+          <div class="pdf-row-info">
+            <div class="rtitle">Materiales</div>
+            <div class="rmeta">MATERIALES.pdf</div>
+          </div>
+          <span class="pdf-row-dl">↓ Abrir</span>
+        </a>
+        <a href="SEMANA%201/EJERCICIOS.pdf" class="pdf-row" target="_blank">
+          <span class="pdf-row-icon">📝</span>
+          <div class="pdf-row-info">
+            <div class="rtitle">Ejercicios</div>
+            <div class="rmeta">EJERCICIOS.pdf</div>
+          </div>
+          <span class="pdf-row-dl">↓ Abrir</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEMANA 2 — próximamente -->
+  <div class="acord-item disabled">
+    <div class="acord-header">
+      <div class="acord-num">2</div>
+      <div class="acord-title">
+        <strong>Semana 2 — Factorización</strong>
+        <span>Material no disponible aún</span>
+      </div>
+      <span class="acord-badge soon">⏳ Próximamente</span>
+    </div>
+  </div>
+
+  <!-- SEMANA 3 — próximamente -->
+  <div class="acord-item disabled">
+    <div class="acord-header">
+      <div class="acord-num">3</div>
+      <div class="acord-title">
+        <strong>Semana 3 — Fracciones algebraicas</strong>
+        <span>Material no disponible aún</span>
+      </div>
+      <span class="acord-badge soon">⏳ Próximamente</span>
+    </div>
+  </div>
+
+  <!-- SEMANA 4 — próximamente -->
+  <div class="acord-item disabled">
+    <div class="acord-header">
+      <div class="acord-num">4</div>
+      <div class="acord-title">
+        <strong>Semana 4 — Ecuaciones</strong>
+        <span>Material no disponible aún</span>
+      </div>
+      <span class="acord-badge soon">⏳ Próximamente</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggleAcord(id) {
+  const item = document.getElementById(id);
+  if (item.classList.contains('disabled')) return;
+  item.classList.toggle('open');
+}
+</script>
+
 <footer>
-  MA-0125 Matemática Elemental &mdash; UCR &nbsp;|&nbsp; Actividades en línea
+  <img src="escudo_p.jpg" alt="UCR" style="width:34px;height:34px;object-fit:cover;border-radius:50%;box-shadow:0 0 0 2px var(--oro);">
+  MA-0125 Matemática Elemental &mdash; UCR Sede Golfito &nbsp;|&nbsp; Prof. Francisco Campos Sandí
 </footer>
 
 </body>
